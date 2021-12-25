@@ -1,6 +1,7 @@
 ## For of Uniswap V2 SDK (generic among many AMMs)
 
-Forking this to do minor customisations for own use.
+Forking this to do minor customisations for own use at: [npm: v2-amm-sdk](https://www.npmjs.com/package/@0xhatsume/v2-amm-sdk)
+Install as usual via: `npm i @0xhatsume/v2-amm-sdk`
 
 ---
 ### Original Repo: Uniswap V2 SDK
