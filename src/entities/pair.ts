@@ -29,14 +29,16 @@ export class Pair {
   public readonly liquidityToken: Token
   private readonly tokenAmounts: [CurrencyAmount<Token>, CurrencyAmount<Token>]
   public readonly inithash: string
+  public readonly factoryAddress: string
 
-  public static getAddress(tokenA: Token, tokenB: Token, inithash:string=INIT_CODE_HASH): string {
-    return computePairAddress({ factoryAddress: FACTORY_ADDRESS, tokenA, tokenB, inithash})
+  public static getAddress(tokenA: Token, tokenB: Token, factoryAddress:string=FACTORY_ADDRESS, inithash:string=INIT_CODE_HASH): string {
+    return computePairAddress({ factoryAddress, tokenA, tokenB, inithash})
   }
 
   public constructor(
     currencyAmountA: CurrencyAmount<Token>, 
     tokenAmountB: CurrencyAmount<Token>,
+    factoryAddress: string=FACTORY_ADDRESS,
     inithash: string=INIT_CODE_HASH
     ) {
     const tokenAmounts = currencyAmountA.currency.sortsBefore(tokenAmountB.currency) // does safety checks
@@ -44,13 +46,14 @@ export class Pair {
       : [tokenAmountB, currencyAmountA]
     this.liquidityToken = new Token(
       tokenAmounts[0].currency.chainId,
-      Pair.getAddress(tokenAmounts[0].currency, tokenAmounts[1].currency, inithash),
+      Pair.getAddress(tokenAmounts[0].currency, tokenAmounts[1].currency, factoryAddress, inithash),
       18,
       'UNI-V2',
       'Uniswap V2'
     )
     this.tokenAmounts = tokenAmounts as [CurrencyAmount<Token>, CurrencyAmount<Token>]
     this.inithash = inithash
+    this.factoryAddress = factoryAddress
   }
 
   /**
